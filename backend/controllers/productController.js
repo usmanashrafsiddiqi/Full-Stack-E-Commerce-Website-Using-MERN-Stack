@@ -23,9 +23,9 @@ const addProduct = async (req, res) => {
 
 
 
-/////creating array to store the images ,if only one image we have for a product then only that image should be uploaded  ////////////////////////
+      /////creating array to store the images ,if only one image we have for a product then only that image should be uploaded  ////////////////////////
       const images = [image1, image2, image3, image4].filter((item) => item !== undefined)
-   
+
 
       //uploading these images to the cloudnary so that we get the URL to store thta in database
 
@@ -34,14 +34,14 @@ const addProduct = async (req, res) => {
          images.map(async (item) => {
             let result = await cloudinary.uploader.upload(item.path, { resouce_type: "image" });
             return result.secure_url
-          
+
          })
       )
       console.log(imagesUrl)
-     
+
 
       //saving to Database////
-      
+
       const productData = {
          name,
          description,
@@ -74,8 +74,8 @@ const listProducts = async (req, res) => {
 
 
    try {
-      const products= await productModel.find({});
-      res.json({success:true,products})
+      const products = await productModel.find({});
+      res.json({ success: true, products })
    } catch (error) {
       console.log(error)
       res.json({ success: false, message: error.message })
@@ -87,14 +87,14 @@ const listProducts = async (req, res) => {
 
 const removeProduct = async (req, res) => {
 
-try {
-   await productModel.findByIdAndDelete(req.body.id)
-   res.json({success:true,message:"product removed"})
-   
-} catch (error) {
-   console.log(error)
-   res.json({ success: false, message: error.message })
-}
+   try {
+      await productModel.findByIdAndDelete(req.body.id)
+      res.json({ success: true, message: "product removed" })
+
+   } catch (error) {
+      console.log(error)
+      res.json({ success: false, message: error.message })
+   }
 
 
 }
@@ -104,16 +104,16 @@ try {
 
 const singleProduct = async (req, res) => {
 
- try {
+   try {
 
-   const {productId }= req.body
-   const product = await productModel.findById(productId)
-   res.json({success:true,product})
-   
- } catch (error) {
-   console.log(error)
-   res.json({ success: false, message: error.message })
- }
+      const { productId } = req.body
+      const product = await productModel.findById(productId)
+      res.json({ success: true, product })
+
+   } catch (error) {
+      console.log(error)
+      res.json({ success: false, message: error.message })
+   }
 
 }
 

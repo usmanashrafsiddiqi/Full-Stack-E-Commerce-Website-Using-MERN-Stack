@@ -30,22 +30,22 @@ const userLogin = async (req, res) => {
         //here the first password will be the user that enter the pssword during login and second will be the pasword that os stored in the database
         const isMatch = await bcrypt.compare(password, user.password)
 
-        if(isMatch){
+        if (isMatch) {
 
             const token = createToken(user._id);
-            res.json({success:true,token})
+            res.json({ success: true, token })
 
 
         }
-        else{
-            res.json({success:false,message:"invalid credientaials"})
+        else {
+            res.json({ success: false, message: "invalid credientaials" })
         }
 
 
     } catch (error) {
 
         console.log(error)
-        res.json({success:false,message:error.message})
+        res.json({ success: false, message: error.message })
     }
 
 
@@ -109,21 +109,21 @@ const userRegister = async (req, res) => {
 }
 
 //Route for  admin Login 
-const adminLogin = async (req,res) => {
-try {
-    const {email,password} = req.body
-    if (email === process.env.ADMIN_EMAIL && password===  process.env.ADMIN_PASSWORD) {
-        const token = jwt.sign(email+password,process.env.JWT_SECRET)
-        res.json({success:true,token})
-        
-    }else{
-        res.json({success:false,message:"inavalid credentials"})
+const adminLogin = async (req, res) => {
+    try {
+        const { email, password } = req.body
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+            const token = jwt.sign(email + password, process.env.JWT_SECRET)
+            res.json({ success: true, token })
+
+        } else {
+            res.json({ success: false, message: "inavalid credentials" })
+        }
+    } catch (error) {
+
+        console.log(error);
+        res.json({ success: false, message: error.message })
     }
-} catch (error) {
-    
-    console.log(error);
-    res.json({ success: false, message: error.message })
-}
 }
 
 export { userLogin, userRegister, adminLogin };

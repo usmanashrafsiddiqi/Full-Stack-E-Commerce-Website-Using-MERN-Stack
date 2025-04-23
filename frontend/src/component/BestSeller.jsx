@@ -13,7 +13,7 @@ const bestproduct = products.filter((item)=>(item.bestseller));
 setbestseller(bestproduct);
 
 
- },[])
+ },[products])
 
 
   return (
